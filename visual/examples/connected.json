@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "id": "invitations-connected",
+  "title": "Invitations: connected consumer",
+  "status": "example",
+  "view": "component",
+  "focus": "component",
+  "definitions": [
+    {
+      "id": "ourapps-ae.invitations",
+      "name": "Invitations",
+      "kind": "component",
+      "status": "example",
+      "package": "ourapps-ae/invitations",
+      "version": "0.1.1",
+      "ports": [
+        {
+          "id": "invitations",
+          "name": "Invitations",
+          "direction": "output",
+          "kind": "interface",
+          "type": "ae/invitations",
+          "version": "1.0.0"
+        }
+      ],
+      "settings": [
+        {
+          "id": "inviteAddress",
+          "name": "Inviteaddress",
+          "type": "string",
+          "required": false,
+          "secret": false
+        },
+        {
+          "id": "codeLength",
+          "name": "Codelength",
+          "type": "number",
+          "required": false,
+          "secret": false,
+          "default": 6
+        }
+      ]
+    },
+    {
+      "id": "consumer",
+      "name": "Example application consumer",
+      "kind": "application",
+      "status": "example",
+      "revision": "0.1.0",
+      "ports": [
+        {
+          "id": "invitations",
+          "name": "Invitations",
+          "direction": "input",
+          "kind": "interface",
+          "type": "ae/invitations",
+          "version": "1.0.0",
+          "required": true,
+          "cardinality": "one"
+        }
+      ],
+      "settings": []
+    }
+  ],
+  "instances": [
+    {
+      "id": "component",
+      "name": "Invitations",
+      "definition": "ourapps-ae.invitations",
+      "configuration": {}
+    },
+    {
+      "id": "consumer",
+      "name": "Example consumer",
+      "definition": "consumer",
+      "configuration": {}
+    }
+  ],
+  "connections": [
+    {
+      "source": {
+        "instance": "component",
+        "port": "invitations"
+      },
+      "target": {
+        "instance": "consumer",
+        "port": "invitations"
+      }
+    }
+  ]
+}

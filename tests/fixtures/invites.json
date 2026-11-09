@@ -1,0 +1,42 @@
+{
+  "settings": { "inviteAddress": "https://play.example/join/", "codeLength": 6 },
+  "addresses": [
+    ["https://play.example/join/", "https://play.example/join"],
+    ["http://localhost:8788", "http://localhost:8788"],
+    ["https://play.example", "https://play.example"],
+    ["https://user@play.example/", null],
+    ["https://play.example/?a=1", null],
+    ["https://play.example/a#b", null],
+    ["ftp://play.example", null],
+    ["play.example", null],
+    ["", null]
+  ],
+  "generate": [
+    { "picks": [0, 1, 2, 3, 4, 5], "code": "ABCDEF" },
+    { "picks": [30, 22, 8, 9, 10, 11], "code": "9ZJKMN" }
+  ],
+  "codes": [
+    ["kt7-q2p", true, "KT7Q2P", "KT7-Q2P"],
+    ["  ab cd-ef  ", true, "ABCDEF", "ABC-DEF"],
+    ["KT7Q2", false, "KT7Q2", "KT7-Q2"],
+    ["KT7Q2PX", false, "KT7Q2PX", "KT7-Q2P-X"],
+    ["KT0Q2P", false, "KT0Q2P", "KT0-Q2P"],
+    ["KT1Q2P", false, "KT1Q2P", "KT1-Q2P"]
+  ],
+  "links": [
+    ["kt7-q2p", null, "https://play.example/join?code=KT7Q2P"],
+    ["KT7Q2P", "garden-1", "https://play.example/join?code=KT7Q2P&room=garden-1"],
+    ["KT7Q2P", "bad room", null],
+    ["short", null, null]
+  ],
+  "parse": [
+    ["https://play.example/join?code=KT7Q2P", ["KT7Q2P", null]],
+    ["https://play.example/join?room=r1&code=kt7-q2p", ["KT7Q2P", "r1"]],
+    ["https://play.example/join?code=KT7Q2P&code=ZZZZZZ", ["KT7Q2P", null]],
+    ["https://other.example/join?code=KT7Q2P", null],
+    ["https://play.example/joined?code=KT7Q2P", null],
+    ["https://play.example/join?code=KT7Q2", null],
+    ["https://play.example/join?code=KT7Q2P&room=bad%20room", null],
+    ["https://play.example/join", null]
+  ]
+}

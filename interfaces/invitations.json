@@ -1,0 +1,21 @@
+{
+  "id": "invitations",
+  "type": "ae/invitations",
+  "version": "1.0.0",
+  "operations": {
+    "normaliseAddress": { "arguments": ["address:string|undefined"], "returns": "string|null" },
+    "generateCode": { "arguments": ["length:integer", "random:()=>number", "alphabet:string"], "returns": "string" },
+    "normaliseCode": { "arguments": ["code:string"], "returns": "string" },
+    "isValidCode": { "arguments": ["code:string", "length:integer"], "returns": "boolean" },
+    "formatCode": { "arguments": ["code:string", "group:integer"], "returns": "string" },
+    "inviteLink": { "arguments": ["settings:{inviteAddress:string,codeLength:integer}", "invitation:{code:string,roomId:string|null}"], "returns": "string|null" },
+    "parseInvite": { "arguments": ["settings:{inviteAddress:string,codeLength:integer}", "link:string"], "returns": "{code:string,roomId:string|null}|null" },
+    "scanPayload": { "arguments": ["link:string"], "returns": "{text:string,correctionLevel:L|M|Q|H}" },
+    "shareInvitation": { "arguments": ["link:string", "text:string", "env:{share?,writeText?}"], "returns": "Promise<shared|copied|cancelled|unavailable>" }
+  },
+  "types": {
+    "link grammar": "<inviteAddress without trailing slash>?code=<CODE>[&room=<roomId>]; CODE is codeLength characters from ABCDEFGHJKMNPQRSTUVWXYZ23456789; roomId matches [A-Za-z0-9_-]{1,64}",
+    "inviteAddress": "absolute http or https address with no credentials, query or fragment",
+    "scannable code": "scanPayload gives the text to encode; drawing the code is a platform call and is not part of this component"
+  }
+}

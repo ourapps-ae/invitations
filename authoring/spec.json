@@ -1,0 +1,135 @@
+{
+  "name": "invitations",
+  "version": "0.1.1",
+  "title": "Invitations",
+  "description": "Invitation links and typed codes for a room, with a payload for a scannable code.",
+  "facilities": [
+    {
+      "id": "invitations",
+      "description": "Invitation codes, links, parsing, sharing and scan payload"
+    }
+  ],
+  "provides": [
+    {
+      "id": "invitations",
+      "type": "ae/invitations",
+      "version": "1.0.0",
+      "path": "interfaces/invitations.json"
+    }
+  ],
+  "requires": [],
+  "collect": [
+    {
+      "id": "inviteAddress",
+      "type": "string",
+      "grammar": "address",
+      "required": false,
+      "secret": false
+    },
+    {
+      "id": "codeLength",
+      "type": "integer",
+      "grammar": "integer",
+      "required": false,
+      "secret": false,
+      "default": 6
+    }
+  ],
+  "platforms": [
+    "server",
+    "web",
+    "apple",
+    "android"
+  ],
+  "tools": {
+    "node": "26.5.0",
+    "python3": "3.12.8",
+    "swiftc": "6.4.2",
+    "kotlinc": "2.2.0",
+    "java": "26.0.1"
+  },
+  "suites": [
+    {
+      "id": "web",
+      "argv": [
+        "node",
+        "--test",
+        "tests/web.test.ts"
+      ],
+      "tools": {
+        "node": "26.5.0"
+      },
+      "scope": "required-local",
+      "fixtures": [
+        "examples/consumer.ts",
+        "tests/fixtures/invites.json"
+      ]
+    },
+    {
+      "id": "apple",
+      "argv": [
+        "python3",
+        "tests/native.py",
+        "apple"
+      ],
+      "tools": {
+        "python3": "3.12.8",
+        "swiftc": "6.4.2"
+      },
+      "fixtures": [
+        "tests/apple/main.swift"
+      ],
+      "scope": "platform"
+    },
+    {
+      "id": "android",
+      "argv": [
+        "python3",
+        "tests/native.py",
+        "android"
+      ],
+      "tools": {
+        "python3": "3.12.8",
+        "kotlinc": "2.2.0",
+        "java": "26.0.1"
+      },
+      "fixtures": [
+        "tests/android/Main.kt"
+      ],
+      "scope": "platform"
+    }
+  ],
+  "infrastructure": {
+    "accounts": [],
+    "deployedReason": "Local library; no service is deployed by this package. The invite address is the application's own page."
+  },
+  "text": {
+    "purpose": "`invitations` makes the link and the short code a person uses to invite others into a room: it generates a code from an alphabet with no look-alike characters, builds a link on the application's invite address that carries the code (and optionally a room), parses such a link back, formats a code for reading out and offers the link through the system share sheet or the clipboard on the web. It supplies the text a scannable-code renderer encodes; drawing the scannable code is a platform call and is not in this component.",
+    "userInputs": "Two settings. `inviteAddress` (address grammar, optional: without it no links are made) is the application's own page that invitation links point to: an absolute http or https address with no credentials, query or fragment. `codeLength` (default 6) is the number of characters in a code.",
+    "integration": "Server: when a room is created call `generateCode(settings.codeLength, random)`, keep it with the room and give it to the directory entry so people can join by code; send `inviteLink(settings, { code, roomId })` in the room's view for clients to show or share. Web: `shareInvitation(link, text, { share: navigator.share?.bind(navigator), writeText: navigator.clipboard?.writeText.bind(navigator.clipboard) })`. All platforms: `parseInvite` on a link the application was opened with. Scannable code: pass `scanPayload(link).text` to the platform's renderer (iOS Core Image `CIFilter.qrCodeGenerator`, level M, as the recipe does; Android and web need a library or service chosen by the application). `examples/consumer.ts` runs the whole cycle without a game.",
+    "infrastructure": "No service. The invite address belongs to the application's web hosting.",
+    "verification": "Required-local: `node --test tests/web.test.ts` checks the address grammar, generation inside the alphabet, normalising and reading-out format, link building and parsing against `tests/fixtures/invites.json`, the scan payload, every sharing outcome and the example. Platform: `python3 tests/native.py apple` compiles and runs the Swift port against the same fixture; `python3 tests/native.py android` compiles the Kotlin port (needs kotlinc, not installed on the authoring machine, so not run there).",
+    "scenarios": "A host creates a room; the screen shows `KT7-Q2P` to read out and a link to share. A guest types `kt7q2p` with different spacing and case and the right room is found. A guest scans the scannable code drawn from the payload and the application opens on the invite address with the code and room filled in. A link from another site, with a wrong-length code or an invalid room id, is ignored.",
+    "updates": "Patch updates replace files; no persisted-state migration. Codes live with the rooms that use them. The link grammar is part of the interface: changing it needs a new interface version."
+  },
+  "agentInstructions": "Select this component when people join by link, typed code or scannable code. Set `inviteAddress` from the application's own web address (ask the developer; it is not a secret) and keep `codeLength` at 6 unless the room count demands more. Connect it to the room directory (codes) and to the host screens (share and scan). If the application needs a drawn scannable code, choose a renderer for each platform separately.",
+  "developerInstructions": "Supply the invite address. Decide how a scannable code is drawn on each platform; this component only gives the text. Keep the code with the room record and expose it in the room list. No accounts or keys are needed.",
+  "suitability": {
+    "format": 1,
+    "jobs": [
+      "invitations"
+    ],
+    "profiles": [
+      {
+        "id": "any",
+        "load": {},
+        "cost": "none",
+        "regions": [
+          "any"
+        ],
+        "compliance": []
+      }
+    ],
+    "notes": "Pure functions; no provider involved."
+  }
+}
