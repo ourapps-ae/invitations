@@ -20,7 +20,7 @@ Two settings. `inviteAddress` (address grammar, optional: without it no links ar
 - `implementation/web/share.ts` -> `components/invitations/web/share.ts`
 
 Dependencies: none.
-`tools.lock.json` pins verification tools: node 26.5.0, python3 3.12.8, swiftc 6.4.2, kotlinc 2.2.0, java 26.0.1. Licence wording remains deferred.
+`tools.lock.json` pins verification tools: node 26.5, python3 3.12, swiftc 6.4, kotlinc 2.2, java 26.0. Licence wording remains deferred.
 
 ## Provided interfaces
 - `interfaces/invitations.json` defines `invitations` (ae/invitations) version 1.0.0 as an OpenRPC 1.3.2 document: the TypeScript functions (tagged `typescript`) and the native `Invitations.*` functions (tagged `swift` and `kotlin`), with the settings, invitation, link grammar and share result as JSON Schema 2020-12.
@@ -40,9 +40,9 @@ No service. The invite address belongs to the application's web hosting.
 ## Verification
 Required-local: `node --test tests/web.test.ts` checks the address grammar, generation inside the alphabet, normalising and reading-out format, link building and parsing against `tests/fixtures/invites.json`, the scan payload, every sharing outcome and the example. Platform: `python3 tests/native.py apple` compiles and runs the Swift port against the same fixture; `python3 tests/native.py android` compiles the Kotlin port (needs kotlinc, not installed on the authoring machine, so not run there).
 
-- `node --test tests/web.test.ts` (web, required-local; tools: node 26.5.0)
-- `python3 tests/native.py apple` (apple, platform; tools: python3 3.12.8, swiftc 6.4.2)
-- `python3 tests/native.py android` (android, platform; tools: python3 3.12.8, kotlinc 2.2.0, java 26.0.1)
+- `node --test tests/web.test.ts` (web, required-local; tools: node 26.5)
+- `python3 tests/native.py apple` (apple, platform; tools: python3 3.12, swiftc 6.4)
+- `python3 tests/native.py android` (android, platform; tools: python3 3.12, kotlinc 2.2, java 26.0)
 
 ## Scenarios and presentation
 A host creates a room; the screen shows `KT7-Q2P` to read out and a link to share. A guest types `kt7q2p` with different spacing and case and the right room is found. A guest scans the scannable code drawn from the payload and the application opens on the invite address with the code and room filled in. A link from another site, with a wrong-length code or an invalid room id, is ignored.

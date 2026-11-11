@@ -1,6 +1,6 @@
 # Source mapping
 
-Reference revision: `19905b75dbea89fbfd424d67fe26c81aaed0e018`. Paths are under `OurPoker/recipe/`.
+Reference revision: `19905b75dbea89fbfd424d67fe26c81aaed0e018`. Paths are under the `recipe/` folder of `ourapps-ae/OurPoker`.
 
 What the recipe has is small: one invitation address from the environment (`INVITE_URL`, `server/src/index.ts` line 15; `server/src/services.ts` lines 6-9 `updateLinks`) is passed to every client as `inviteUrl` (`server/src/contract.ts` line 227, `server/src/adapter.ts` line 106, `web/src/api.ts` line 44, `ios/OurPoker/Sources/Model.swift` line 251, `android/.../net/Model.kt` line 181), and the iOS table viewer draws it as a scannable code with the text "Scan to get OurPoker" (`ios/OurPoker/Sources/DisplayScreen.swift` lines 568-575 and `qrCode` lines 605-612). That address is a store link for getting the application, not a link to one room. The web and Android screens have no share, invite-code or scan code (`web/src/store.ts` and `web/src/screens.ts` contain none). The recipe has no QR payload generator: iOS hands the link text to Core Image.
 
