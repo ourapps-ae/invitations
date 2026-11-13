@@ -3,7 +3,7 @@
 ## For the agent
 Select this component when people join by link, typed code or scannable code. Set `inviteAddress` from the application's own web address (ask the developer; it is not a secret) and keep `codeLength` at 6 unless the room count demands more. Connect it to the room directory (codes) and to the host screens (share and scan). If the application needs a drawn scannable code, choose a renderer for each platform separately.
 
-- Select package `ourapps-ae/invitations` version `0.2.1`.
+- Select package `ourapps-ae/invitations` version `0.3.0`.
 - Settings to configure:
   - `inviteAddress` (string, address; optional)
   - `codeLength` (integer; optional; default `6`)
