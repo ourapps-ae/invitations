@@ -6,7 +6,7 @@ struct Invitation: Equatable {
 }
 
 // Same rules as the server's invitations.ts; the links round trip between the two.
-enum Invitations {
+public enum Invitations {
     static let alphabet = Array("ABCDEFGHJKMNPQRSTUVWXYZ23456789")
 
     // An absolute http or https address without credentials, query or fragment; trailing slashes are dropped.

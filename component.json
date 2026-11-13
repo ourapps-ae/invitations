@@ -13,9 +13,21 @@
       "template": false
     },
     {
+      "destination": "components/invitations/server/index.ts",
+      "executable": false,
+      "source": "implementation/server/index.ts",
+      "template": false
+    },
+    {
       "destination": "components/invitations/server/invitations.ts",
       "executable": false,
       "source": "implementation/server/invitations.ts",
+      "template": false
+    },
+    {
+      "destination": "components/invitations/web/index.ts",
+      "executable": false,
+      "source": "implementation/web/index.ts",
       "template": false
     },
     {
@@ -31,7 +43,9 @@
     "writes": [
       "components/invitations/android/src/main/java/ae/invitations/Invitations.kt",
       "components/invitations/apple/Sources/Invitations.swift",
+      "components/invitations/server/index.ts",
       "components/invitations/server/invitations.ts",
+      "components/invitations/web/index.ts",
       "components/invitations/web/share.ts"
     ]
   },
@@ -105,7 +119,15 @@
     },
     {
       "executable": false,
+      "path": "implementation/server/index.ts"
+    },
+    {
+      "executable": false,
       "path": "implementation/server/invitations.ts"
+    },
+    {
+      "executable": false,
+      "path": "implementation/web/index.ts"
     },
     {
       "executable": false,
